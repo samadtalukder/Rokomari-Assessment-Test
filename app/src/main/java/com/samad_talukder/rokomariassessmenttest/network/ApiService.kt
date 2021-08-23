@@ -10,11 +10,13 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_SIGN_UP)
     suspend fun signUpRequest(
         @Body signUpRequest: SignUpRequest
     ): Response<SignUpResponse>
 
+    @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_LOG_IN)
     suspend fun loginRequest(
         @Body loginRequest: LoginRequest
