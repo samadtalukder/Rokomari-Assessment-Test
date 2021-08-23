@@ -1,9 +1,9 @@
 package com.samad_talukder.rokomariassessmenttest.network
 
-import com.samad_talukder.rokomariassessmenttest.model.request.LoginRequest
+import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
 import com.samad_talukder.rokomariassessmenttest.model.response.AllBookListResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.LoginResponse
+import com.samad_talukder.rokomariassessmenttest.model.response.SignInResponse
 import com.samad_talukder.rokomariassessmenttest.model.response.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -18,9 +18,9 @@ interface ApiService {
 
     @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_LOG_IN)
-    suspend fun loginRequest(
-        @Body loginRequest: LoginRequest
-    ): Response<LoginResponse>
+    suspend fun sigInRequest(
+        @Body loginRequest: SignInRequest
+    ): Response<SignInResponse>
 
     @Headers("Content-Type: application/json")
     @GET(ApiUrl.API_BOOK_LIST)
