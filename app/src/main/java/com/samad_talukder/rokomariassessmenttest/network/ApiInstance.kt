@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiInstance {
-    val api: ApiInterface by lazy {
+    val api: ApiService by lazy {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -17,6 +17,6 @@ object ApiInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-            .create(ApiInterface::class.java)
+            .create(ApiService::class.java)
     }
 }
