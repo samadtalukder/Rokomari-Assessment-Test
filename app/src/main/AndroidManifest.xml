@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RokomariAssessmentTest">
-        <activity android:name=".ui.auth.LoginActivity"></activity>
+        <activity android:name=".ui.auth.SignUpActivity"></activity>
+        <activity android:name=".ui.auth.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
