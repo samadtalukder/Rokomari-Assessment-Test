@@ -3,6 +3,7 @@ package com.samad_talukder.rokomariassessmenttest.network
 import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
 import com.samad_talukder.rokomariassessmenttest.model.response.AllBookListResponse
+import com.samad_talukder.rokomariassessmenttest.model.response.BookDetailsResponse
 import com.samad_talukder.rokomariassessmenttest.model.response.SignInResponse
 import com.samad_talukder.rokomariassessmenttest.model.response.SignUpResponse
 import retrofit2.Response
@@ -28,7 +29,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("page") pageNo: Int,
         @Query("limit") limit: Int,
-        @Query("new_arrival") arrivalType: Boolean,
+        @Query("new_arrival") arrivalType: String,
     ): Response<AllBookListResponse>
 
     @Headers("Content-Type: application/json")
@@ -36,7 +37,7 @@ interface ApiService {
     suspend fun getBookDetails(
         @Header("Authorization") token: String,
         @Path("bookId") bookId: String,
-        ): Response<AllBookListResponse>
+        ): Response<BookDetailsResponse>
 
 
 }

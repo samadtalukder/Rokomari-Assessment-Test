@@ -85,7 +85,6 @@ class SignInActivity : AppCompatActivity() {
                 is HandleResource.Success -> {
                     hideProgressBar()
                     response.data?.let { signInResponse ->
-                        Toast.makeText(this, signInResponse.access, Toast.LENGTH_SHORT).show()
                         preferenceManager.token = signInResponse.access
                         goToHomeActivity()
                     }
