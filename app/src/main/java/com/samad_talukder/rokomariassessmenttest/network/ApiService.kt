@@ -1,11 +1,9 @@
 package com.samad_talukder.rokomariassessmenttest.network
 
+import com.samad_talukder.rokomariassessmenttest.model.request.PurchaseBookRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
-import com.samad_talukder.rokomariassessmenttest.model.response.AllBookListResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.BookDetailsResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.SignInResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.SignUpResponse
+import com.samad_talukder.rokomariassessmenttest.model.response.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -13,19 +11,19 @@ interface ApiService {
 
     @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_SIGN_UP)
-    suspend fun signUpRequest(
+    suspend fun callSignUpApi(
         @Body signUpRequest: SignUpRequest
     ): Response<SignUpResponse>
 
     @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_LOG_IN)
-    suspend fun sigInRequest(
+    suspend fun callSigInApi(
         @Body loginRequest: SignInRequest
     ): Response<SignInResponse>
 
     @Headers("Content-Type: application/json")
     @GET(ApiUrl.API_BOOK_LIST)
-    suspend fun getNewArrivalBook(
+    suspend fun callNewArrivalBookApi(
         @Header("Authorization") token: String,
         @Query("page") pageNo: Int,
         @Query("limit") limit: Int,
@@ -34,10 +32,29 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @GET("books/{bookId}")
-    suspend fun getBookDetails(
+    suspend fun callBookDetailsApi(
         @Header("Authorization") token: String,
         @Path("bookId") bookId: String,
         ): Response<BookDetailsResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiUrl.API_PURCHASE)
+    suspend fun callPurchaseApi(
+        @Header("Authorization") token: String,
+        @Body purchaseBookRequest: PurchaseBookRequest,
+        ): Response<PurchaseResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET(ApiUrl.API_PURCHASE)
+    suspend fun callPurchaseByUserBookApi(
+        @Header("Authorization") token: String,
+        ): Response<PurchaseResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET(ApiUrl.API_MY_WALLET)
+    suspend fun callWalletApi(
+        @Header("Authorization") token: String,
+        ): Response<MyWalletResponse>
 
 
 }
