@@ -1,5 +1,6 @@
 package com.samad_talukder.rokomariassessmenttest.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.samad_talukder.rokomariassessmenttest.model.request.PurchaseBookRequest
@@ -8,6 +9,7 @@ import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
 import com.samad_talukder.rokomariassessmenttest.model.response.*
 import com.samad_talukder.rokomariassessmenttest.repository.RokomariRepository
 import com.samad_talukder.rokomariassessmenttest.utils.HandleResource
+import com.samad_talukder.rokomariassessmenttest.utils.ToastUtils
 import kotlinx.coroutines.*
 import retrofit2.Response
 
@@ -34,6 +36,8 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
 
     val myWalletResponse: MutableLiveData<HandleResource<MyWalletResponse>> =
         MutableLiveData()
+
+    val purchaseErrorResponse: MutableLiveData<HandleResource<ErrorResponse>> = MutableLiveData()
 
 
     fun signUp(signUpRequest: SignUpRequest) {
@@ -114,7 +118,11 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
             val bookPurchaseByUserData = rokomariRepository.purchaseUserBookList(token)
 
             withContext(Dispatchers.Main) {
-                purchaseUserBookListResponse.postValue(handlePurchaseUserBookListResponse(bookPurchaseByUserData))
+                purchaseUserBookListResponse.postValue(
+                    handlePurchaseUserBookListResponse(
+                        bookPurchaseByUserData
+                    )
+                )
             }
 
         }
@@ -159,11 +167,14 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
     }
 
     private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse>? {
-        if (bookPurchaseData.isSuccessful) {
+        if (bookPurchaseData.code() == 200) {
 
             bookPurchaseData.body()?.let { bookPurchaseResponseData ->
                 return HandleResource.Success(bookPurchaseResponseData)
             }
+
+        } else {
+            Log.e("errorBody", "${bookPurchaseData}")
 
         }
 
@@ -178,7 +189,6 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
             }
 
         }
-
         return HandleResource.Error(bookDetailsResponseData.message())
     }
 
