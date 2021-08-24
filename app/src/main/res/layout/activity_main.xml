@@ -13,25 +13,100 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNewArrival"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_new_arrival_books"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"
-            android:padding="8dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvExplorer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_new_arrival_books"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="26dp"
+                    android:text="New Arrivals"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    />
+
+                <Button
+                    android:id="@+id/btNewArrivalSeeAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="#00A59494"
+                    android:backgroundTint="#00A59494"
+                    android:elevation="0dp"
+                    android:text="See All"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNewArrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_new_arrival_books" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutExploreBooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="26dp"
+                    android:text="Explore"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnExploreSeeAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="#00A59494"
+                    android:backgroundTint="#00A59494"
+                    android:elevation="0dp"
+                    android:text="See All"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvExplorer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_explore_books" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
