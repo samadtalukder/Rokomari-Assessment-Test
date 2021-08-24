@@ -46,9 +46,9 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @GET(ApiUrl.API_PURCHASE)
-    suspend fun callPurchaseByUserBookApi(
+    suspend fun callPurchaseUserBookListApi(
         @Header("Authorization") token: String,
-        ): Response<PurchaseResponse>
+        ): Response<PurchaseBookListResponse>
 
     @Headers("Content-Type: application/json")
     @GET(ApiUrl.API_MY_WALLET)

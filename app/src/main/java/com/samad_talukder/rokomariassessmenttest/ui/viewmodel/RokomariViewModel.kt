@@ -2,12 +2,10 @@ package com.samad_talukder.rokomariassessmenttest.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.samad_talukder.rokomariassessmenttest.model.request.PurchaseBookRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
-import com.samad_talukder.rokomariassessmenttest.model.response.AllBookListResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.BookDetailsResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.SignInResponse
-import com.samad_talukder.rokomariassessmenttest.model.response.SignUpResponse
+import com.samad_talukder.rokomariassessmenttest.model.response.*
 import com.samad_talukder.rokomariassessmenttest.repository.RokomariRepository
 import com.samad_talukder.rokomariassessmenttest.utils.HandleResource
 import kotlinx.coroutines.*
@@ -15,12 +13,26 @@ import retrofit2.Response
 
 class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel() {
     var job: Job? = null
+
     val signUpStatus: MutableLiveData<HandleResource<SignUpResponse>> = MutableLiveData()
+
     val signInStatus: MutableLiveData<HandleResource<SignInResponse>> = MutableLiveData()
+
     val newArrivalResponse: MutableLiveData<HandleResource<AllBookListResponse>> = MutableLiveData()
+
     val exploreBookResponse: MutableLiveData<HandleResource<AllBookListResponse>> =
         MutableLiveData()
+
     val bookDetailsResponse: MutableLiveData<HandleResource<BookDetailsResponse>> =
+        MutableLiveData()
+
+    val bookPurchaseResponse: MutableLiveData<HandleResource<PurchaseResponse>> =
+        MutableLiveData()
+
+    val purchaseUserBookListResponse: MutableLiveData<HandleResource<PurchaseBookListResponse>> =
+        MutableLiveData()
+
+    val myWalletResponse: MutableLiveData<HandleResource<MyWalletResponse>> =
         MutableLiveData()
 
 
@@ -81,6 +93,81 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
 
         }
 
+    }
+
+    fun bookPurchase(token: String, purchaseBookRequest: PurchaseBookRequest) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+
+            val bookPurchaseData = rokomariRepository.bookPurchase(token, purchaseBookRequest)
+
+            withContext(Dispatchers.Main) {
+                bookPurchaseResponse.postValue(handleBookPurchaseResponse(bookPurchaseData))
+            }
+
+        }
+
+    }
+
+    fun bookPurchaseByUser(token: String) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+
+            val bookPurchaseByUserData = rokomariRepository.purchaseUserBookList(token)
+
+            withContext(Dispatchers.Main) {
+                purchaseUserBookListResponse.postValue(handlePurchaseUserBookListResponse(bookPurchaseByUserData))
+            }
+
+        }
+
+    }
+
+    fun myWallet(token: String) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+
+            val bookMyWalletData = rokomariRepository.myWallet(token)
+
+            withContext(Dispatchers.Main) {
+                myWalletResponse.postValue(handleMyWalletResponse(bookMyWalletData))
+            }
+
+        }
+
+    }
+
+    private fun handleMyWalletResponse(bookMyWalletResponse: Response<MyWalletResponse>): HandleResource<MyWalletResponse>? {
+        if (bookMyWalletResponse.isSuccessful) {
+
+            bookMyWalletResponse.body()?.let { bookMyWalletData ->
+                return HandleResource.Success(bookMyWalletData)
+            }
+
+        }
+
+        return HandleResource.Error(bookMyWalletResponse.message())
+    }
+
+    private fun handlePurchaseUserBookListResponse(bookPurchaseByUserData: Response<PurchaseBookListResponse>): HandleResource<PurchaseBookListResponse>? {
+        if (bookPurchaseByUserData.isSuccessful) {
+
+            bookPurchaseByUserData.body()?.let { bookPurchaseResponseData ->
+                return HandleResource.Success(bookPurchaseResponseData)
+            }
+
+        }
+
+        return HandleResource.Error(bookPurchaseByUserData.message())
+    }
+
+    private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse>? {
+        if (bookPurchaseData.isSuccessful) {
+
+            bookPurchaseData.body()?.let { bookPurchaseResponseData ->
+                return HandleResource.Success(bookPurchaseResponseData)
+            }
+
+        }
+
+        return HandleResource.Error(bookPurchaseData.message())
     }
 
     private fun handleBooksDetailsResponse(bookDetailsResponseData: Response<BookDetailsResponse>): HandleResource<BookDetailsResponse>? {
