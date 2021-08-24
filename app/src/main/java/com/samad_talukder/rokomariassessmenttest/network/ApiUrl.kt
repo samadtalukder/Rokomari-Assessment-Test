@@ -6,7 +6,6 @@ object ApiUrl {
     const val API_SIGN_UP = "auth/register/"
     const val API_LOG_IN = "auth/token/"
     const val API_BOOK_LIST = "books/"
-    const val API_BOOK_DETAILS = "books/"
     const val API_PURCHASE = "purchase/"
     const val API_MY_WALLET = "wallet/"
 
