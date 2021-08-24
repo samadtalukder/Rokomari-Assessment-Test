@@ -30,10 +30,8 @@
             tools:listitem="@layout/item_new_arrival_books"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            android:clipToPadding="false"
             android:layout_marginTop="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="60dp" />
+            />
 
     </LinearLayout>
 

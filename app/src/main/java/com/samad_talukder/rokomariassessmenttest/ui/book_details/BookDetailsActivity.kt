@@ -31,7 +31,7 @@ class BookDetailsActivity : AppCompatActivity() {
             ViewModelProvider(this, viewModelProviderFactory)
                 .get(RokomariViewModel::class.java)
 
-        val bookId = intent.getStringExtra("id")
+        val bookId:String? = intent.getStringExtra("book_id")
 
         Log.e("ID","$bookId")
 
@@ -43,7 +43,7 @@ class BookDetailsActivity : AppCompatActivity() {
             )
         }
 
-        rokomariViewModel.newArrivalResponse.observe(this, { response ->
+        rokomariViewModel.bookDetailsResponse.observe(this, { response ->
             when (response) {
                 is HandleResource.Loading -> {
 
@@ -51,7 +51,7 @@ class BookDetailsActivity : AppCompatActivity() {
                 is HandleResource.Success -> {
 
                     response.data?.let { bookDetailsResponse ->
-                        textViewBookTitle.text = bookDetailsResponse.models[0].summary
+                        textViewBookTitle.text = bookDetailsResponse.model.summary
                     }
                 }
                 is HandleResource.Error -> {

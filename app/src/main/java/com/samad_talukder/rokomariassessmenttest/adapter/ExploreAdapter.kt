@@ -13,7 +13,7 @@ import com.samad_talukder.rokomariassessmenttest.model.response.BookModel
 import kotlinx.android.synthetic.main.item_new_arrival_books.view.*
 
 
-class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewHolder>() {
+class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
 
     private val differCallBack = object : DiffUtil.ItemCallback<BookModel>() {
         override fun areItemsTheSame(
@@ -34,14 +34,14 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
 
     val differ = AsyncListDiffer(this, differCallBack)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewArrivalViewHolder {
-        return NewArrivalViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExploreViewHolder {
+        return ExploreViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_new_arrival_books, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: NewArrivalViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) {
         val userList = differ.currentList[position]
         holder.dataBind(userList)
     }
@@ -56,7 +56,7 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
         onItemClickListener = listener
     }
 
-    inner class NewArrivalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExploreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun dataBind(results: BookModel) {
 
@@ -66,9 +66,6 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
                 onItemClickListener?.let { it(results) }
             }
         }
-
-
-
 
     }
 }

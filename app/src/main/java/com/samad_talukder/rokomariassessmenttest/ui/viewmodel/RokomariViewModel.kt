@@ -18,7 +18,10 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
     val signUpStatus: MutableLiveData<HandleResource<SignUpResponse>> = MutableLiveData()
     val signInStatus: MutableLiveData<HandleResource<SignInResponse>> = MutableLiveData()
     val newArrivalResponse: MutableLiveData<HandleResource<AllBookListResponse>> = MutableLiveData()
-    val bookDetailsResponse: MutableLiveData<HandleResource<BookDetailsResponse>> = MutableLiveData()
+    val exploreBookResponse: MutableLiveData<HandleResource<AllBookListResponse>> =
+        MutableLiveData()
+    val bookDetailsResponse: MutableLiveData<HandleResource<BookDetailsResponse>> =
+        MutableLiveData()
 
 
     fun signUp(signUpRequest: SignUpRequest) {
@@ -50,12 +53,19 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
     fun newArrivalBooks(token: String, pageNo: Int, limit: Int, isNewArrival: String) {
         job = CoroutineScope(Dispatchers.IO).launch {
 
-            val newArrivalBooksResponse = rokomariRepository.allBookRequest(token, pageNo, limit, isNewArrival)
+            val newArrivalBooksResponse =
+                rokomariRepository.allBookRequest(token, pageNo, limit, isNewArrival)
 
             withContext(Dispatchers.Main) {
-                newArrivalResponse.postValue(handleBooksResponse(newArrivalBooksResponse))
+                when (isNewArrival) {
+                    "True" -> {
+                        newArrivalResponse.postValue(handleBooksResponse(newArrivalBooksResponse))
+                    }
+                    "False" -> {
+                        exploreBookResponse.postValue(handleBooksResponse(newArrivalBooksResponse))
+                    }
+                }
             }
-
         }
 
     }
@@ -88,8 +98,8 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
     private fun handleBooksResponse(newArrivalBooksResponse: Response<AllBookListResponse>): HandleResource<AllBookListResponse>? {
         if (newArrivalBooksResponse.isSuccessful) {
 
-            newArrivalBooksResponse.body()?.let { signUpResponseData ->
-                return HandleResource.Success(signUpResponseData)
+            newArrivalBooksResponse.body()?.let { booksResponseData ->
+                return HandleResource.Success(booksResponseData)
             }
 
         }

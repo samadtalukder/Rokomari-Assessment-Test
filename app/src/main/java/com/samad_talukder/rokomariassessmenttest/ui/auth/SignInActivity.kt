@@ -34,6 +34,10 @@ class SignInActivity : AppCompatActivity() {
         val viewModelProviderFactory = ViewModelProviderFactory(randomUserRepository)
         preferenceManager = PreferenceManager(this)
 
+        if (preferenceManager.token?.isNotEmpty() == true) {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
         rokomariViewModel =
             ViewModelProvider(this, viewModelProviderFactory)
                 .get(RokomariViewModel::class.java)
