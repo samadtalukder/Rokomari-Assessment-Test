@@ -1,6 +1,6 @@
 package com.samad_talukder.rokomariassessmenttest.model.response
 
-data class Model(
+data class BookDetailsModel(
     val author_name_bn: String,
     val id: Int,
     val image_path: String,
