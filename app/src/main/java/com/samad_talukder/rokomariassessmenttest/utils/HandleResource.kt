@@ -6,5 +6,7 @@ sealed class HandleResource<T>(
 ) {
     class Loading<T> : HandleResource<T>()
     class Success<T>(data: T?) : HandleResource<T>(data)
+    //class Failed<T>(data: T?) : HandleResource<T>(data)
     class Error<T>(message: String?, data: T? = null) : HandleResource<T>(data, message)
+
 }

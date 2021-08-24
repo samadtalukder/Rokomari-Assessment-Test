@@ -80,20 +80,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        rokomariViewModel.exploreBookResponse.observe(this, { response ->
-            when (response) {
+        rokomariViewModel.exploreBookResponse.observe(this, {
+            when (it) {
                 is HandleResource.Loading -> {
 
                 }
                 is HandleResource.Success -> {
 
-                    response.data?.let { randomUserResponse ->
+                    it.data?.let { randomUserResponse ->
                         exploreAdapter.differ.submitList(randomUserResponse.models)
                     }
                 }
                 is HandleResource.Error -> {
 
-                    response.message?.let { response -> Log.e("Error", response) }
+                    it.message?.let { response -> Log.e("Error", response) }
                 }
             }
         })
@@ -122,6 +122,12 @@ class MainActivity : AppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
 
+        }
+
+        exploreAdapter.setOnClickListener {
+            val intent = Intent(this, BookDetailsActivity::class.java)
+            intent.putExtra("book_id", it.id.toString())
+            startActivity(intent)
         }
 
     }
