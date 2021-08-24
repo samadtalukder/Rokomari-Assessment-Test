@@ -26,7 +26,7 @@ class RokomariRepository {
         ApiInstance.api.callPurchaseByUserBookApi(token)
 
     suspend fun myWallet(token: String) =
-        ApiInstance.api.callPurchaseByUserBookApi(token)
+        ApiInstance.api.callWalletApi(token)
 
 
 }
