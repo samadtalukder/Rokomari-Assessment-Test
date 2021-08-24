@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.samad_talukder.rokomariassessmenttest.R
 import com.samad_talukder.rokomariassessmenttest.model.response.BookModel
+import com.samad_talukder.rokomariassessmenttest.utils.GlideUtils
+import kotlinx.android.synthetic.main.activity_book_details.view.*
 import kotlinx.android.synthetic.main.item_new_arrival_books.view.*
 
 
@@ -60,7 +62,7 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
         @SuppressLint("SetTextI18n")
         fun dataBind(results: BookModel) {
 
-            itemView.textViewBookTitle.text = results.name_bn
+            GlideUtils.showImage(itemView.context,results.image_path,itemView.ivArrivalBookImage)
 
             itemView.setOnClickListener {
                 onItemClickListener?.let { it(results) }
