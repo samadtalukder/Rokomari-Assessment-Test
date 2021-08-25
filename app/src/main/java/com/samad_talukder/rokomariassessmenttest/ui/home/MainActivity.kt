@@ -10,18 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.samad_talukder.rokomariassessmenttest.R
 import com.samad_talukder.rokomariassessmenttest.adapter.ExploreAdapter
 import com.samad_talukder.rokomariassessmenttest.adapter.NewArrivalAdapter
+import com.samad_talukder.rokomariassessmenttest.model.response.BookModel
 import com.samad_talukder.rokomariassessmenttest.preferences.PreferenceManager
 import com.samad_talukder.rokomariassessmenttest.repository.RokomariRepository
 import com.samad_talukder.rokomariassessmenttest.ui.book_details.BookDetailsActivity
 import com.samad_talukder.rokomariassessmenttest.ui.viewmodel.RokomariViewModel
 import com.samad_talukder.rokomariassessmenttest.ui.viewmodel.ViewModelProviderFactory
 import com.samad_talukder.rokomariassessmenttest.utils.HandleResource
+import com.samad_talukder.rokomariassessmenttest.utils.ItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemClickListener {
     lateinit var preferenceManager: PreferenceManager
     private lateinit var newArrivalAdapter: NewArrivalAdapter
     private lateinit var exploreAdapter: ExploreAdapter
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         newArrivalAdapter = NewArrivalAdapter()
-        exploreAdapter = ExploreAdapter()
+        exploreAdapter = ExploreAdapter(this)
 
         rvNewArrival.apply {
             rvNewArrival.adapter = newArrivalAdapter
@@ -124,12 +126,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        exploreAdapter.setOnClickListener {
-            val intent = Intent(this, BookDetailsActivity::class.java)
-            intent.putExtra("book_id", it.id.toString())
-            startActivity(intent)
-        }
+    }
 
+    override fun onItemClick(position: BookModel) {
+        val intent = Intent(this, BookDetailsActivity::class.java)
+        intent.putExtra("book_id", position.id.toString())
+        startActivity(intent)
     }
 
 }

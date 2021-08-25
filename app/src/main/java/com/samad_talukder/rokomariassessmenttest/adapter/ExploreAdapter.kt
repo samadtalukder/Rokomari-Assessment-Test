@@ -11,12 +11,13 @@ import com.bumptech.glide.Glide
 import com.samad_talukder.rokomariassessmenttest.R
 import com.samad_talukder.rokomariassessmenttest.model.response.BookModel
 import com.samad_talukder.rokomariassessmenttest.utils.GlideUtils
+import com.samad_talukder.rokomariassessmenttest.utils.ItemClickListener
 import kotlinx.android.synthetic.main.item_explore_books.view.*
 import kotlinx.android.synthetic.main.item_new_arrival_books.view.*
 import kotlinx.android.synthetic.main.item_new_arrival_books.view.ivArrivalBookImage
 
 
-class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
+class ExploreAdapter(private val itemClickListener: ItemClickListener) : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
 
     private val differCallBack = object : DiffUtil.ItemCallback<BookModel>() {
         override fun areItemsTheSame(
@@ -53,12 +54,6 @@ class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() 
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((BookModel) -> Unit)? = null
-
-    fun setOnClickListener(listener: (BookModel) -> Unit) {
-        onItemClickListener = listener
-    }
-
     inner class ExploreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun dataBind(results: BookModel) {
@@ -70,7 +65,7 @@ class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() 
             GlideUtils.showImage(itemView.context, results.image_path, itemView.ivExploreBookImage)
 
             itemView.setOnClickListener {
-                onItemClickListener?.let { it(results) }
+                itemClickListener.onItemClick(results)
             }
         }
 
