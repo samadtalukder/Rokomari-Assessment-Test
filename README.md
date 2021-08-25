@@ -2,10 +2,8 @@
 The repository has contains the Rokomari Live Test, where an Android project is created and implement their features which were mentioned in the document.
 
 Here is the screenshots of the application:
-<img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/01.login_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/01.login_screen.jpg" width="200" height="400" />  
-<img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/02.sign_up_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/02.sign_up_screen.jpg" width="200" height="400" />  
-<img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/03.book_home_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/03.book_home_screen.jpg" width="200" height="400" />  
-<img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/04.book_details_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/04.book_details_screen.jpg" width="200" height="400" />  
+
+<img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/01.login_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/01.login_screen.jpg" width="200" height="400" />  <img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/02.sign_up_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/02.sign_up_screen.jpg" width="200" height="400" />  <img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/03.book_home_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/03.book_home_screen.jpg" width="200" height="400" />  <img src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/04.book_details_screen.jpg" alt="" data-canonical-src="https://github.com/samadtalukder/Rokomari-Assessment-Test/blob/master/requirement/04.book_details_screen.jpg" width="200" height="400" />  
 
 ## Application Flow
 
