@@ -23,5 +23,5 @@ Here is the list of technologies are used to build this application:
 1. <b>Kotlin</b>
 2. <b>MVVM Architecture</b>
 3. <b> Retrofit, OkHttp</b> : To fetch their books data from API, I have used the network library which is Retrofit.
-4. <b>Kotlin Coroutine</b> : To reduce the main thread task we can divide the task in many thread asychronously using the Kotlin Coroutine using `lifecycle` scope. 
+4. <b>Kotlin Coroutine</b> : To reduce the main thread task we can divide the task in many thread asynchronously using the Kotlin Coroutine using `lifecycle` scope. 
 5. <b>Jetpack Component - Pagging 3</b> : Why pagging is required this application, because the book list has a massive amount of data and If I wanted to fetch these data at a single time it will take huge amount of time. So that pagination is required, the jetpack component which is Pagging3 is one of the most used jetpack component to perform the paginated data in the `RecyclerView`. It also better with Kotlin Coroutine and Live Data. For that need to create Pagging adapter where we can detect the Success and Error state.
