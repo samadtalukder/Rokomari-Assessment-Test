@@ -137,7 +137,15 @@ class BookDetailsActivity : AppCompatActivity() {
                     }
                 }
 
-                is HandleResource.Error -> {
+                /*is HandleResource.Error -> {
+
+                    it.message?.let { walletResponse ->
+                        Log.e("Error", walletResponse)
+
+                    }
+                }*/
+
+                is HandleResource.Failed -> {
 
                     it.message?.let { walletResponse ->
                         Log.e("Error", walletResponse)

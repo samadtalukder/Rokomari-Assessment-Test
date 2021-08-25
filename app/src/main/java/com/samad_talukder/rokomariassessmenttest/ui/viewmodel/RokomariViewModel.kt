@@ -1,17 +1,20 @@
 package com.samad_talukder.rokomariassessmenttest.ui.viewmodel
 
+import android.R.raw
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.samad_talukder.rokomariassessmenttest.model.request.PurchaseBookRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
 import com.samad_talukder.rokomariassessmenttest.model.response.*
 import com.samad_talukder.rokomariassessmenttest.repository.RokomariRepository
 import com.samad_talukder.rokomariassessmenttest.utils.HandleResource
-import com.samad_talukder.rokomariassessmenttest.utils.ToastUtils
 import kotlinx.coroutines.*
+import org.json.JSONObject
 import retrofit2.Response
+
 
 class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel() {
     var job: Job? = null
@@ -166,19 +169,37 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
         return HandleResource.Error(bookPurchaseByUserData.message())
     }
 
-    private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse>? {
-        if (bookPurchaseData.code() == 200) {
 
-            bookPurchaseData.body()?.let { bookPurchaseResponseData ->
-                return HandleResource.Success(bookPurchaseResponseData)
+    private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse>? {
+        bookPurchaseData.body()?.let { myDataData ->
+            if (bookPurchaseData.code() == 200) {
+                return HandleResource.Success(myDataData)
+            } else if (bookPurchaseData.code() == 403) {
+                val rawResponse = myDataData.errorResponse.error
+                Log.e("ErrorRes", rawResponse)
+                return HandleResource.Failed(getErrorMessage(rawResponse))
+
             }
 
-        } else {
-            Log.e("errorBody", "${bookPurchaseData}")
-
         }
+        return HandleResource.Failed(bookPurchaseData.body()?.errorResponse?.error)
+        /*if (bookPurchaseData.code() == 200) {
 
-        return HandleResource.Error(bookPurchaseData.message())
+                bookPurchaseData.body()?.let { bookPurchaseResponseData ->
+                    return HandleResource.Success(bookPurchaseResponseData)
+                }
+
+            } else {
+                Log.e("errorBody", "${bookPurchaseData}")
+
+            }
+
+            return HandleResource.Error(bookPurchaseData.errorBody().toString())*/
+    }
+
+    private fun getErrorMessage(rawResponse: String): String {
+        val jsonObject = JSONObject(rawResponse)
+        return jsonObject.getString("error")
     }
 
     private fun handleBooksDetailsResponse(bookDetailsResponseData: Response<BookDetailsResponse>): HandleResource<BookDetailsResponse>? {
