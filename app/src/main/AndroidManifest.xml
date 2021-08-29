@@ -3,7 +3,7 @@
     package="com.samad_talukder.rokomariassessmenttest">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".app.RokomariApp"
@@ -12,10 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.RokomariAssessmentTest">
+        android:theme="@style/Theme.RokomariAssessmentTest"
+        android:usesCleartextTraffic="true">
 
-        <activity android:name=".ui.book_details.BookDetailsActivity"/>
+        <activity
+            android:name=".ui.book_details.BookDetailsActivity"
+            android:theme="@style/Theme.NoActionBar" />
 
         <activity android:name=".ui.home.MainActivity" />
 

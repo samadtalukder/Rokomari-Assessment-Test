@@ -3,6 +3,7 @@ package com.samad_talukder.rokomariassessmenttest.ui.book_details
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.samad_talukder.rokomariassessmenttest.R
@@ -26,6 +27,7 @@ class BookDetailsActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_book_details)
 
         val randomUserRepository = RokomariRepository()
