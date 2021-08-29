@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.Intent.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -44,25 +45,25 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        if (editTextUserName.text.toString().isEmpty()) {
+        val userName = editTextUserName.text.toString()
+        val userEmail = editTextUserEmail.text.toString()
+        val userPassword = editTextUserPassword.text.toString()
+
+        if (TextUtils.isEmpty(userName)) {
             editTextUserName.error = "Enter user name"
             editTextUserName.requestFocus()
             return
         }
-        if (editTextUserEmail.text.toString().isEmpty()) {
+        if (TextUtils.isEmpty(userEmail)) {
             editTextUserEmail.error = "Enter Email"
             editTextUserEmail.requestFocus()
             return
         }
-        if (editTextUserPassword.text.toString().isEmpty()) {
+        if (TextUtils.isEmpty(userPassword)) {
             editTextUserPassword.error = "Enter Password"
             editTextUserPassword.requestFocus()
             return
         }
-
-        val userName = editTextUserName.text.toString()
-        val userEmail = editTextUserEmail.text.toString()
-        val userPassword = editTextUserPassword.text.toString()
 
         val signUpRequest = SignUpRequest(userEmail, userPassword, userName)
 
@@ -95,6 +96,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     }
                 }
+                else -> {}
             }
         })
     }
