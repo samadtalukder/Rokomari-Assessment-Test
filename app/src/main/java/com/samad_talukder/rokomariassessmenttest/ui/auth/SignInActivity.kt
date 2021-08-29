@@ -3,6 +3,7 @@ package com.samad_talukder.rokomariassessmenttest.ui.auth
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,20 +55,19 @@ class SignInActivity : AppCompatActivity() {
 
     private fun signInApiCall() {
 
-        if (editTextLoginUserName.text.toString().isEmpty()) {
-            editTextUserName.error = "Enter user name"
-            editTextUserName.requestFocus()
-            return
-        }
-        if (editTextLoginUserPassword.text.toString().isEmpty()) {
-            editTextUserPassword.error = "Enter Password"
-            editTextUserPassword.requestFocus()
-            return
-        }
-
         val userName = editTextLoginUserName.text.toString()
         val userPassword = editTextLoginUserPassword.text.toString()
 
+        if (TextUtils.isEmpty(userName)) {
+            editTextLoginUserName.error = "Enter User Name"
+            editTextLoginUserName.requestFocus()
+            return
+        }
+        if (TextUtils.isEmpty(userPassword)) {
+            editTextLoginUserPassword.error = "Enter Password"
+            editTextLoginUserPassword.requestFocus()
+            return
+        }
 
         val signInRequest = SignInRequest(userPassword, userName)
 
@@ -100,6 +100,9 @@ class SignInActivity : AppCompatActivity() {
 
                     }
                 }
+                else -> {
+
+                }
             }
         })
     }
@@ -113,10 +116,10 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-        progressBarLogin.visibility = View.VISIBLE
+        progressDialog.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        progressBarLogin.visibility = View.INVISIBLE
+        progressDialog.visibility = View.GONE
     }
 }
