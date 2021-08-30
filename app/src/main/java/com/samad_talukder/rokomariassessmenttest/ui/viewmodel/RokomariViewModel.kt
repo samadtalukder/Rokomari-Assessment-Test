@@ -1,10 +1,7 @@
 package com.samad_talukder.rokomariassessmenttest.ui.viewmodel
 
-import android.R.raw
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
 import com.samad_talukder.rokomariassessmenttest.model.request.PurchaseBookRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignInRequest
 import com.samad_talukder.rokomariassessmenttest.model.request.SignUpRequest
@@ -49,7 +46,7 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
             val signUpResponse = rokomariRepository.signUpRequest(signUpRequest)
 
             withContext(Dispatchers.Main) {
-                signUpStatus.postValue(handleResponse(signUpResponse))
+                signUpStatus.postValue(handleSignUpResponse(signUpResponse))
             }
 
         }
@@ -78,10 +75,10 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
             withContext(Dispatchers.Main) {
                 when (isNewArrival) {
                     "True" -> {
-                        newArrivalResponse.postValue(handleBooksResponse(newArrivalBooksResponse))
+                        newArrivalResponse.postValue(handleHomeBooksResponse(newArrivalBooksResponse))
                     }
                     "False" -> {
-                        exploreBookResponse.postValue(handleBooksResponse(newArrivalBooksResponse))
+                        exploreBookResponse.postValue(handleHomeBooksResponse(newArrivalBooksResponse))
                     }
                 }
             }
@@ -145,7 +142,59 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
 
     }
 
-    private fun handleMyWalletResponse(bookMyWalletResponse: Response<MyWalletResponse>): HandleResource<MyWalletResponse>? {
+
+    private fun getPurchaseErrorMessage(rawResponse: String,jObject: String): String {
+        val jsonObject = JSONObject(rawResponse)
+        return jsonObject.getString(jObject)
+    }
+
+    private fun handleSignUpResponse(signUpResponse: Response<SignUpResponse>): HandleResource<SignUpResponse> {
+
+        if (signUpResponse.isSuccessful) {
+
+            signUpResponse.body()?.let { signUpResponseData ->
+                return HandleResource.Success(signUpResponseData)
+            }
+
+        }
+
+        return HandleResource.Error(signUpResponse.message())
+    }
+
+    private fun handleSignInResponse(signInResponse: Response<SignInResponse>): HandleResource<SignInResponse> {
+        if (signInResponse.code() == 200) {
+            signInResponse.body()?.let { signUpResponseData ->
+                return HandleResource.Success(signUpResponseData)
+            }
+        }
+        return HandleResource.Error(getPurchaseErrorMessage(signInResponse.errorBody()?.string().toString(),"detail"))
+
+    }
+
+    private fun handleHomeBooksResponse(newArrivalBooksResponse: Response<AllBookListResponse>): HandleResource<AllBookListResponse> {
+        if (newArrivalBooksResponse.isSuccessful) {
+
+            newArrivalBooksResponse.body()?.let { booksResponseData ->
+                return HandleResource.Success(booksResponseData)
+            }
+
+        }
+
+        return HandleResource.Error(getPurchaseErrorMessage(newArrivalBooksResponse.errorBody()?.string().toString(),"detail"))
+    }
+
+    private fun handleBooksDetailsResponse(bookDetailsResponseData: Response<BookDetailsResponse>): HandleResource<BookDetailsResponse> {
+        if (bookDetailsResponseData.isSuccessful) {
+
+            bookDetailsResponseData.body()?.let { signUpResponseData ->
+                return HandleResource.Success(signUpResponseData)
+            }
+
+        }
+        return HandleResource.Error(bookDetailsResponseData.message())
+    }
+
+    private fun handleMyWalletResponse(bookMyWalletResponse: Response<MyWalletResponse>): HandleResource<MyWalletResponse> {
         if (bookMyWalletResponse.isSuccessful) {
 
             bookMyWalletResponse.body()?.let { bookMyWalletData ->
@@ -169,85 +218,18 @@ class RokomariViewModel(val rokomariRepository: RokomariRepository) : ViewModel(
         return HandleResource.Error(bookPurchaseByUserData.message())
     }
 
+    private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse> {
+        if (bookPurchaseData.code() == 200) {
 
-    private fun handleBookPurchaseResponse(bookPurchaseData: Response<PurchaseResponse>): HandleResource<PurchaseResponse>? {
-        bookPurchaseData.body()?.let { myDataData ->
-            if (bookPurchaseData.code() == 200) {
-                return HandleResource.Success(myDataData)
-            } else if (bookPurchaseData.code() == 403) {
-                val rawResponse = myDataData.errorResponse.error
-                Log.e("ErrorRes", rawResponse)
-                return HandleResource.Failed(getErrorMessage(rawResponse))
-
-            }
-
-        }
-        return HandleResource.Failed(bookPurchaseData.body()?.errorResponse?.error)
-        /*if (bookPurchaseData.code() == 200) {
-
-                bookPurchaseData.body()?.let { bookPurchaseResponseData ->
-                    return HandleResource.Success(bookPurchaseResponseData)
-                }
-
-            } else {
-                Log.e("errorBody", "${bookPurchaseData}")
-
-            }
-
-            return HandleResource.Error(bookPurchaseData.errorBody().toString())*/
-    }
-
-    private fun getErrorMessage(rawResponse: String): String {
-        val jsonObject = JSONObject(rawResponse)
-        return jsonObject.getString("error")
-    }
-
-    private fun handleBooksDetailsResponse(bookDetailsResponseData: Response<BookDetailsResponse>): HandleResource<BookDetailsResponse>? {
-        if (bookDetailsResponseData.isSuccessful) {
-
-            bookDetailsResponseData.body()?.let { signUpResponseData ->
-                return HandleResource.Success(signUpResponseData)
-            }
-
-        }
-        return HandleResource.Error(bookDetailsResponseData.message())
-    }
-
-    private fun handleBooksResponse(newArrivalBooksResponse: Response<AllBookListResponse>): HandleResource<AllBookListResponse>? {
-        if (newArrivalBooksResponse.isSuccessful) {
-
-            newArrivalBooksResponse.body()?.let { booksResponseData ->
-                return HandleResource.Success(booksResponseData)
+            bookPurchaseData.body()?.let { bookPurchaseResponseData ->
+                return HandleResource.Success(bookPurchaseResponseData)
             }
 
         }
 
-        return HandleResource.Error(newArrivalBooksResponse.message())
+        return HandleResource.Error(getPurchaseErrorMessage(bookPurchaseData.errorBody()?.string().toString(),"error"))
     }
 
-    private fun handleResponse(signUpResponse: Response<SignUpResponse>): HandleResource<SignUpResponse>? {
 
-        if (signUpResponse.isSuccessful) {
-
-            signUpResponse.body()?.let { signUpResponseData ->
-                return HandleResource.Success(signUpResponseData)
-            }
-
-        }
-
-        return HandleResource.Error(signUpResponse.message())
-    }
-
-    private fun handleSignInResponse(signInResponse: Response<SignInResponse>): HandleResource<SignInResponse>? {
-        if (signInResponse.isSuccessful) {
-
-            signInResponse.body()?.let { signUpResponseData ->
-                return HandleResource.Success(signUpResponseData)
-            }
-
-        }
-
-        return HandleResource.Error(signInResponse.message())
-    }
 }
 

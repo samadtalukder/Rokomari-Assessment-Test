@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.samad_talukder.rokomariassessmenttest.R
@@ -139,21 +140,14 @@ class BookDetailsActivity : AppCompatActivity() {
                     }
                 }
 
-                /*is HandleResource.Error -> {
-
-                    it.message?.let { walletResponse ->
-                        Log.e("Error", walletResponse)
-
-                    }
-                }*/
-
-                is HandleResource.Failed -> {
-
-                    it.message?.let { walletResponse ->
-                        Log.e("Error", walletResponse)
+                is HandleResource.Error -> {
+                    it.message?.let { errorResponse ->
+                        Toast.makeText(this, errorResponse, Toast.LENGTH_SHORT).show()
 
                     }
                 }
+
+
 
             }
         })

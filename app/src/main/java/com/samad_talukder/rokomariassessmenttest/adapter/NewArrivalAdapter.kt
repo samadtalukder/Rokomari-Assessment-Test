@@ -45,7 +45,8 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
 
     override fun onBindViewHolder(holder: NewArrivalViewHolder, position: Int) {
         val userList = differ.currentList[position]
-        holder.dataBind(userList)
+        userList?.let { holder.dataBind(it) }
+
     }
 
     override fun getItemCount(): Int {
@@ -62,15 +63,12 @@ class NewArrivalAdapter : RecyclerView.Adapter<NewArrivalAdapter.NewArrivalViewH
         @SuppressLint("SetTextI18n")
         fun dataBind(results: BookModel) {
 
-            GlideUtils.showImage(itemView.context,results.image_path,itemView.ivArrivalBookImage)
+            GlideUtils.showImage(itemView.context, results.image_path, itemView.ivArrivalBookImage)
 
             itemView.setOnClickListener {
                 onItemClickListener?.let { it(results) }
             }
         }
-
-
-
 
     }
 }

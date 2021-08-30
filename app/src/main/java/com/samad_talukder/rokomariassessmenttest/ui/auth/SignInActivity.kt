@@ -35,9 +35,7 @@ class SignInActivity : AppCompatActivity() {
         val viewModelProviderFactory = ViewModelProviderFactory(randomUserRepository)
         preferenceManager = PreferenceManager(this)
 
-        if (preferenceManager.token?.isNotEmpty() == true) {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+
 
         rokomariViewModel =
             ViewModelProvider(this, viewModelProviderFactory)
@@ -109,8 +107,6 @@ class SignInActivity : AppCompatActivity() {
 
     private fun goToHomeActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }

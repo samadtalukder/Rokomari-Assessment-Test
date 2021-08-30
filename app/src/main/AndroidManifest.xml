@@ -19,12 +19,12 @@
             android:name=".ui.book_details.BookDetailsActivity"
             android:theme="@style/Theme.NoActionBar" />
 
-        <activity android:name=".ui.home.MainActivity" />
+        <activity android:name=".ui.auth.SignInActivity" />
 
         <activity android:name=".ui.auth.SignUpActivity" />
 
         <activity
-            android:name=".ui.auth.SignInActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
