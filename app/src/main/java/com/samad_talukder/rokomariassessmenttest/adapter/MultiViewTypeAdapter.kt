@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_new_arrival_books.view.*
 import kotlinx.android.synthetic.main.item_new_arrival_books.view.ivArrivalBookImage
 
 
-class MultiViewAdapter(private val itemClickListener: ItemClickListener, private val viewType: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MultiViewTypeAdapter(private val itemClickListener: ItemClickListener, private val viewType: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val NEW_ARRIVAL = 1
 
