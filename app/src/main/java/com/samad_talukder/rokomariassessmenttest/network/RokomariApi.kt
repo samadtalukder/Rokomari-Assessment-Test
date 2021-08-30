@@ -7,7 +7,7 @@ import com.samad_talukder.rokomariassessmenttest.model.response.*
 import retrofit2.Response
 import retrofit2.http.*
 
-interface ApiService {
+interface RokomariApi {
 
     @Headers("Content-Type:application/json")
     @POST(ApiUrl.API_SIGN_UP)
