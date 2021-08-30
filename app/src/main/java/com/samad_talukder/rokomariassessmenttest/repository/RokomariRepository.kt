@@ -8,25 +8,25 @@ import com.samad_talukder.rokomariassessmenttest.network.ApiInstance
 class RokomariRepository {
 
     suspend fun signUpRequest(signUpRequest: SignUpRequest) =
-        ApiInstance.api.callSignUpApi(signUpRequest)
+        ApiInstance.rokomariApi.callSignUpApi(signUpRequest)
 
     suspend fun signInRequest(signInRequest: SignInRequest) =
-        ApiInstance.api.callSigInApi(signInRequest)
+        ApiInstance.rokomariApi.callSigInApi(signInRequest)
 
     suspend fun allBookRequest(token: String, pageNo: Int, limit: Int, isNewArrival: String) =
-        ApiInstance.api.callNewArrivalBookApi(token, pageNo, limit, isNewArrival)
+        ApiInstance.rokomariApi.callNewArrivalBookApi(token, pageNo, limit, isNewArrival)
 
     suspend fun bookDetails(token: String, bookId: String) =
-        ApiInstance.api.callBookDetailsApi(token, bookId)
+        ApiInstance.rokomariApi.callBookDetailsApi(token, bookId)
 
     suspend fun bookPurchase(token: String, purchaseBookRequest: PurchaseBookRequest) =
-        ApiInstance.api.callPurchaseApi(token, purchaseBookRequest)
+        ApiInstance.rokomariApi.callPurchaseApi(token, purchaseBookRequest)
 
     suspend fun purchaseUserBookList(token: String) =
-        ApiInstance.api.callPurchaseUserBookListApi(token)
+        ApiInstance.rokomariApi.callPurchaseUserBookListApi(token)
 
     suspend fun myWallet(token: String) =
-        ApiInstance.api.callWalletApi(token)
+        ApiInstance.rokomariApi.callWalletApi(token)
 
 
 }

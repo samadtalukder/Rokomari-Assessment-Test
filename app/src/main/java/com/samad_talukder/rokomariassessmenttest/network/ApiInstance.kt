@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiInstance {
-    val api: ApiService by lazy {
+    val rokomariApi: RokomariApi by lazy {
 
         val loggingLevelType: HttpLoggingInterceptor.Level =
             if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
@@ -32,6 +32,6 @@ object ApiInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-            .create(ApiService::class.java)
+            .create(RokomariApi::class.java)
     }
 }
